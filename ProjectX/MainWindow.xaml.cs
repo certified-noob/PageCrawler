@@ -29,18 +29,23 @@ namespace ProjectX
 
             try
             {
-                //MessageBox.Show(GetData());
-                rtb.Document.Blocks.Add(new Paragraph(new Run(GetData())));
-                rtb.Focusable = false;
-                //tView.Items.Add(JSONOperation.Json2Tree(JArray.Parse(GetData()), "Root"));
+                var rawdata = GetData();
+                rawdata = rawdata.Substring(rawdata.IndexOf("stream")+8);
+                rawdata = rawdata.Remove(rawdata.LastIndexOf("tradesOnly")-2);
+                tradesView.Items.Add(JSONOperation.Json2Tree(JToken.Parse(rawdata), "Trades"));  
+
             }
             catch (JsonReaderException jre)
             {
                 MessageBox.Show($"Invalid Json {jre.Message}");
             }
-            GetData();
         }
 
+        private  TreeViewItem GetChild(string key, string value)
+        {
+            var outputValue = string.IsNullOrEmpty(value) ? "null" : value;
+            return new TreeViewItem() { Header = $" \x22{key}\x22 : \x22{value}\x22" };
+        }
         string GetData()
         {
             var client = new RestClient("https://profit.ly/pusher/api");

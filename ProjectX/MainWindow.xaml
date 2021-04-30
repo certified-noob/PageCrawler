@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <RichTextBox x:Name="rtb" AutomationProperties.HelpText="HTML Data" IsEnabled="False" />
+        <TreeView x:Name="tradesView" FontFamily="Segoe UI Light"/>
 
 
     </Grid>

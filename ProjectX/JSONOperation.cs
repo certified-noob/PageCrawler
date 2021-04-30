@@ -14,6 +14,12 @@ namespace ProjectX
             var parent = new TreeViewItem() { Header = rootName };
 
             foreach (JToken obj in root)
+            {
+                if (obj.Type==JTokenType.Property)
+                {
+                    parent.Items.Add(new TreeViewItem { Header = $" \x22{obj}\x22 " });
+                    continue;
+                }
                 foreach (KeyValuePair<string, JToken> token in (JObject)obj)
                     switch (token.Value.Type)
                     {
@@ -34,15 +40,15 @@ namespace ProjectX
                             parent.Items.Add(GetChild(token));
                             break;
                     }
+            }
+    return parent;
+}
 
-            return parent;
-        }
-
-        private static TreeViewItem GetChild(KeyValuePair<string, JToken> token)
-        {
-            var value = token.Value.ToString();
-            var outputValue = string.IsNullOrEmpty(value) ? "null" : value;
-            return new TreeViewItem() { Header = $" \x22{token.Key}\x22 : \x22{outputValue}\x22" };
-        }
-    }
+private static TreeViewItem GetChild(KeyValuePair<string, JToken> token)
+{
+    var value = token.Value.ToString();
+    var outputValue = string.IsNullOrEmpty(value) ? "null" : value;
+    return new TreeViewItem() { Header = $" \x22{token.Key}\x22 : \x22{outputValue}\x22" };
+}
+}
 }
