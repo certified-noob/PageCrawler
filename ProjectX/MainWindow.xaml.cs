@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,11 @@ namespace ProjectX
 
             try
             {
+
+                //var data = File.ReadAllText(@"C:\Users\Muhammad Taha - Home\Downloads\New document 2.json");
+                //var rawdata = data;
+
+
                 var rawdata = GetData();
                 rawdata = rawdata.Substring(rawdata.IndexOf("stream")+8);
                 rawdata = rawdata.Remove(rawdata.LastIndexOf("tradesOnly")-2);
